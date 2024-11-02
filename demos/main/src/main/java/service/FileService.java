@@ -1,33 +1,32 @@
 package service;
 
 import android.content.Context;
-import android.util.Log;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.LocalDateTime;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 //#TODO: Co về 1 hàm xử lý file
 public class FileService {
-  public static void saveJsonToFile(Context context, String jsonString, String fileName) {
+  public static void saveDataToFile(Context context, String folder, String data,  String fileName) {
     try {
-      File dir = new File(context.getFilesDir(), "playback_data");
-      Log.e("File dir:::", dir.getPath());
+      File dir = new File(context.getFilesDir(), folder);
       if (!dir.exists()) {
         dir.mkdir();
       }
 
       File file = new File(dir, fileName);
       FileWriter writer = new FileWriter(file);
-      writer.write(jsonString);
+      writer.write(data);
       writer.close();
-      System.out.println("JSON data saved to " + file.getAbsolutePath());
     } catch (IOException e) {
       e.printStackTrace();
     }
   }
 
   public static String generateFileName() {
-    String timestamp = LocalDateTime.now().toString();
-    return "playback_data_" + timestamp + ".json";
+    String timeStamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date());
+    return timeStamp;
   }
 }

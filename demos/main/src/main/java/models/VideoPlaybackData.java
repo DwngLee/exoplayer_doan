@@ -1,35 +1,55 @@
 package models;
 
+import com.google.android.exoplayer2.util.AudioSegments;
+import com.google.android.exoplayer2.util.StallingTimeInfo;
+import com.google.android.exoplayer2.util.VideoSegments;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
 public class VideoPlaybackData {
-    private List<StallingTime> stallingTimes;
-    private List<SegmentInfo> segmentInfos;
+    private VideoSegments I13;
+    private StallingTimeInfo I23;
+    private AudioSegments I11;
 
-    public VideoPlaybackData() {
-        this.stallingTimes = new ArrayList<>();
-        this.segmentInfos = new ArrayList<>();
+    public VideoPlaybackData(VideoSegments i13, StallingTimeInfo i23, AudioSegments i11) {
+        I13 = i13;
+        I23 = i23;
+        I11 = i11;
     }
 
-    public void addStallingTime(StallingTime stallingTime) {
-        stallingTimes.add(stallingTime);
+    public AudioSegments getI11() {
+        return I11;
     }
 
-    public void addSegmentInfo(SegmentInfo segmentInfo) {
-        segmentInfos.add(segmentInfo);
+    public void setI11(AudioSegments i11) {
+        I11 = i11;
     }
 
-    public List<StallingTime> getStallingTimes() {
-        return stallingTimes;
+    public VideoSegments getI13() {
+        return I13;
     }
 
-    public List<SegmentInfo> getSegmentInfos() {
-        return segmentInfos;
+    public void setI13(VideoSegments i13) {
+        I13 = i13;
     }
 
-    @Override
-    public String toString() {
-        return "VideoPlaybackData{stallingTimes=" + stallingTimes + ", segmentInfos=" + segmentInfos + "}";
+    public StallingTimeInfo getI23() {
+        return I23;
+    }
+
+    public void setI23(StallingTimeInfo i23) {
+        I23 = i23;
+    }
+
+    public VideoPlaybackData(VideoSegments i13, StallingTimeInfo i23) {
+        I13 = i13;
+        I23 = i23;
+    }
+
+    public String toJson(){
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        return gson.toJson(this);
     }
 }
