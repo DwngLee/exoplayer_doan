@@ -15,6 +15,7 @@
  */
 package com.google.android.exoplayer2.upstream;
 
+import android.content.Context;
 import android.os.Handler;
 import androidx.annotation.Nullable;
 import com.google.android.exoplayer2.C;
@@ -114,6 +115,10 @@ public interface BandwidthMeter {
   default long getPowerConsumption(){
     return 0;
   };
+
+  default Context getContext(){
+    return null;
+  }
 
   /**
    * Returns the estimated time to first byte, in microseconds, or {@link C#TIME_UNSET} if no

@@ -352,6 +352,11 @@ public final class DefaultBandwidthMeter implements BandwidthMeter, TransferList
   }
 
   @Override
+  public Context getContext() {
+    return BandwidthMeter.super.getContext();
+  }
+
+  @Override
   public TransferListener getTransferListener() {
     return this;
   }
