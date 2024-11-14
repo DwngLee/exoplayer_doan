@@ -116,7 +116,6 @@ public class CustomAnalytics implements AnalyticsListener, Runnable {
       saveVideoPlaybackData(fileName);
     }
   }
-
   @Override
   public void onMediaItemTransition(EventTime eventTime, @Nullable MediaItem mediaItem,
       int reason) {

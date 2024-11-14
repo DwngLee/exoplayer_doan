@@ -303,6 +303,8 @@ public final class DefaultBandwidthMeter implements BandwidthMeter, TransferList
 
   private BatteryManager batteryManager;
 
+  private Context copyContext;
+
   private long currentPowerConsumption;
   private DefaultBandwidthMeter(
       @Nullable Context context,
@@ -321,6 +323,7 @@ public final class DefaultBandwidthMeter implements BandwidthMeter, TransferList
       bitrateEstimate = getInitialBitrateEstimateForNetworkType(networkType);
       networkTypeObserver.register(/* listener= */ this::onNetworkTypeChanged);
       this.batteryManager = (BatteryManager) context.getSystemService(Context.BATTERY_SERVICE);
+      this.copyContext = context;
     } else {
       networkType = C.NETWORK_TYPE_UNKNOWN;
       bitrateEstimate = getInitialBitrateEstimateForNetworkType(C.NETWORK_TYPE_UNKNOWN);
@@ -353,7 +356,7 @@ public final class DefaultBandwidthMeter implements BandwidthMeter, TransferList
 
   @Override
   public Context getContext() {
-    return BandwidthMeter.super.getContext();
+    return copyContext;
   }
 
   @Override
