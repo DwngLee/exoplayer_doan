@@ -593,6 +593,22 @@
             "uri": "https://exo.dwngle.me/public/streaming/brightness_and_contrast/lighter/index.mpd"
           }
         ]
+      },
+      {
+        "name": "1920x1080 10 bitrate",
+        "playlist": [
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/1920x1080_10_bitrate/index.mpd"
+          }
+        ]
+      },
+      {
+        "name": "1280x720 10 bitrate",
+        "playlist": [
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/1280x720_10_bitrate/index.mpd"
+          }
+        ]
       }
     ]
   },
