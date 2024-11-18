@@ -344,6 +344,8 @@ public class AdaptiveTrackSelection extends BaseTrackSelection {
 
   private static int MAX_J = -999999999;
 
+  private long effectiveBitrateForSegment = 1;
+
   /**
    * @param group          The {@link TrackGroup}.
    * @param tracks         The indices of the selected tracks within the {@link TrackGroup}. Must not be
@@ -484,10 +486,22 @@ public class AdaptiveTrackSelection extends BaseTrackSelection {
       previousReason = Iterables.getLast(queue).trackSelectionReason;
     }
     int newSelectedIndex = determineIdealSelectedIndexButHaveQoEAndPowerConsumption(nowMs,
-        chunkDurationUs,
-        previousSelectedIndex,
-        bufferedDurationUs);
+        chunkDurationUs);
 //    int newSelectedIndex = determineIdealSelectedIndex(nowMs, chunkDurationUs);
+    Format previousFormat = getFormat(previousSelectedIndex);
+    Format newFormat = getFormat(newSelectedIndex);
+    double M = 4.3;
+    Log.i("EffectiveBitrate", effectiveBitrateForSegment + "");
+
+    double T = newFormat.bitrate * 2 / effectiveBitrateForSegment - bufferedDurationUs / 1000000;
+
+    double QoE = newFormat.bitrate / 1000 - M * T * 100 - Math.abs(
+        newFormat.bitrate / 1000 - previousFormat.bitrate / 1000);
+
+    double power = (-0.1144 * newFormat.bitrate/1000 * newFormat.bitrate/1000
+        + 2003.1 * newFormat.bitrate/1000 + 30000000);//hàm tính cs
+
+    Log.i("Infomation:::", String.format("%.2f,%.2f,%d,%d", QoE, power, newFormat.bitrate, bufferedDurationUs/1000000));
 
     if (newSelectedIndex != previousSelectedIndex
         && !isTrackExcluded(previousSelectedIndex, nowMs)) {
@@ -644,43 +658,22 @@ public class AdaptiveTrackSelection extends BaseTrackSelection {
   }
 
   private int determineIdealSelectedIndexButHaveQoEAndPowerConsumption(
-      long nowMs, 
-      long chunkDurationUs,
-      int previousSelectedIndex,
-      long bufferedDurationUs) {
+      long nowMs,
+      long chunkDurationUs) {
     long effectiveBitrate = getAllocatedBandwidth(chunkDurationUs);
-    Format currentFormat = getFormat(previousSelectedIndex);
-    double M = 4.3;
 
     int lowestBitrateAllowedIndex = 0;
     for (int i = 0; i < length; i++) {
       if (nowMs == Long.MIN_VALUE || !isTrackExcluded(i, nowMs)) {
         Format format = getFormat(i);
         if (canSelectFormat(format, format.bitrate, effectiveBitrate)) {
-          double T = format.bitrate * 2 / effectiveBitrate - bufferedDurationUs / 1000000;
-
-          double QoE = format.bitrate / 1000 - M * T * 100 - Math.abs(
-              format.bitrate / 1000 - currentFormat.bitrate / 1000);
-
-          double power = (-0.11 * format.bitrate/1000 * format.bitrate/1000
-              + 2003 * format.bitrate/10000 + 30000000);
-          Log.i("Infomation:::", String.format("%.2f,%.2f,%2f", QoE, power, Double.valueOf(format.bitrate)));
-
+            effectiveBitrateForSegment = effectiveBitrate;
           return i;
         } else {
           lowestBitrateAllowedIndex = i;
         }
       }
     }
-    Format format = getFormat(lowestBitrateAllowedIndex);
-    double T = format.bitrate * 2 / effectiveBitrate - bufferedDurationUs / 1000000;
-
-    double QoE = format.bitrate / 1000 - M * T * 100 - Math.abs(
-        format.bitrate / 1000 - currentFormat.bitrate / 1000);
-
-    double power = (-0.11 * format.bitrate/1000 * format.bitrate/1000
-        + 2003 * format.bitrate/10000 + 30000000);
-    Log.i("Infomation:::", String.format("%.2f,%.2f,%2f", QoE, power, Double.valueOf(format.bitrate)));
     return lowestBitrateAllowedIndex;
   }
 
@@ -689,7 +682,6 @@ public class AdaptiveTrackSelection extends BaseTrackSelection {
       int previousSelectedIndex,
       long bufferedDurationUs) {
     long effectiveBitrate = getAllocatedBandwidth(chunkDurationUs);
-    Log.i("EffectiveBitrate", effectiveBitrate + "");
     Format currentFormat = getFormat(previousSelectedIndex);
     double M = 4.3;
     double Jcostmin = 99999999.0;
@@ -704,11 +696,11 @@ public class AdaptiveTrackSelection extends BaseTrackSelection {
           double QoE = determineFormat.bitrate / 1000 - M * T * 100 - Math.abs(
               determineFormat.bitrate / 1000 - currentFormat.bitrate / 1000);
 
-          double power = (-0.11 * determineFormat.bitrate/1000 * determineFormat.bitrate/1000
-              + 2003 * determineFormat.bitrate/10000 + 30000000);//hàm tính cs
+          double power = (-0.1144 * determineFormat.bitrate / 1000 * determineFormat.bitrate / 1000
+              + 2003.1 * determineFormat.bitrate / 1000 + 30000000);//hàm tính cs
 //          double power = Double.valueOf(bandwidthMeter.getPowerConsumption());
 
-          double derivated_power = -0.22 * determineFormat.bitrate/1000 + 2003;
+          double derivated_power = -0.22 * determineFormat.bitrate / 1000 + 2003;
 
           double JCost = 0;
 
@@ -716,29 +708,23 @@ public class AdaptiveTrackSelection extends BaseTrackSelection {
             JCost = 1 / QoE;
           } else if (determineFormat.bitrate == currentFormat.bitrate) {
             JCost = 1 / QoE
-                + 1 / (currentFormat.bitrate/1000 * currentFormat.bitrate/1000 * derivated_power) * power;
+                +
+                1 / (currentFormat.bitrate / 1000 * currentFormat.bitrate / 1000 * derivated_power)
+                    * power;
           } else {
-            JCost = 1 / QoE + 2 / ((2 * currentFormat.bitrate/1000 - determineFormat.bitrate/1000) * (
-                2 * currentFormat.bitrate/1000 - determineFormat.bitrate/1000) * derivated_power) * power;
+            JCost = 1 / QoE
+                + 2 / ((2 * currentFormat.bitrate / 1000 - determineFormat.bitrate / 1000) * (
+                2 * currentFormat.bitrate / 1000 - determineFormat.bitrate / 1000)
+                * derivated_power) * power;
           }
           if (JCost < Jcostmin) {
             Jcostmin = JCost;
             lowestBitrateAllowedIndex = i;
+            effectiveBitrateForSegment = effectiveBitrate;
           }
         }
       }
     }
-    Log.i("Selected index:", String.valueOf(getFormat(lowestBitrateAllowedIndex).bitrate));
-    Format determineFormat = getFormat(lowestBitrateAllowedIndex);
-    double T = determineFormat.bitrate * 2 / effectiveBitrate - bufferedDurationUs / 1000000;
-
-    double QoE = determineFormat.bitrate / 1000 - M * T * 100 - Math.abs(
-        determineFormat.bitrate / 1000 - currentFormat.bitrate / 1000);
-
-    double power = (-0.1144 * determineFormat.bitrate/1000 * determineFormat.bitrate/1000
-        + 2003.1 * determineFormat.bitrate/10000 + 30000000);//hàm tính cs
-
-    Log.i("Infomation:::", String.format("%.2f,%.2f,%2f", QoE, power, Double.valueOf(determineFormat.bitrate)));
     return lowestBitrateAllowedIndex;
   }
 

@@ -601,14 +601,6 @@
             "uri": "https://exo.dwngle.me/public/streaming/1920x1080_10_bitrate/index.mpd"
           }
         ]
-      },
-      {
-        "name": "1280x720 10 bitrate",
-        "playlist": [
-          {
-            "uri": "https://exo.dwngle.me/public/streaming/1280x720_10_bitrate/index.mpd"
-          }
-        ]
       }
     ]
   },
@@ -848,6 +840,35 @@
           },
           {
             "uri": "https://exo.dwngle.me/public/streaming/resolution_w_bitrate/3840x2160_12000k/index.mpd"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "1280x720 10 bitrate",
+    "samples": [
+      {
+        "name": "video 1",
+        "playlist": [
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/1280x720_10_bitrate/video1/index.mpd"
+          }
+        ]
+      },
+      {
+        "name": "video 2",
+        "playlist": [
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/1280x720_10_bitrate/video2/index.mpd"
+          }
+        ]
+      },
+      {
+        "name": "video 3",
+        "playlist": [
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/1280x720_10_bitrate/video3/index.mpd"
           }
         ]
       }
