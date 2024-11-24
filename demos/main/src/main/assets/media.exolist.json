@@ -572,7 +572,7 @@
         "name": "Brighness Normal",
         "playlist": [
           {
-            "uri": "https://exo.dwngle.me/public/streaming/spiderman/index.mpd"
+            "uri": "https://exo.dwngle.me/public/streaming/streaming3/index.mpd"
           }
         ]
       }
@@ -774,7 +774,7 @@
         ]
       },
       {
-        "name": "Playlist 10 bitrate",
+        "name": "Playlist 10 bitrate (each video is one bitrate)",
         "playlist": [
           {
             "uri": "https://exo.dwngle.me/public/streaming/diff_bitrate/200/index.mpd"
@@ -869,6 +869,64 @@
         "playlist": [
           {
             "uri": "https://exo.dwngle.me/public/streaming/1280x720_10_bitrate/video3/index.mpd"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "1920x1280 10 bitrate",
+    "samples": [
+      {
+        "name": "video 1",
+        "playlist": [
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/1920x1080_10_bitrate/video1/index.mpd"
+          }
+        ]
+      },
+      {
+        "name": "video 2",
+        "playlist": [
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/1920x1080_10_bitrate/video2/index.mpd"
+          }
+        ]
+      },
+      {
+        "name": "video 3",
+        "playlist": [
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/1920x1080_10_bitrate/video3/index.mpd"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "real",
+    "samples": [
+      {
+        "name": "video 1",
+        "playlist": [
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/video1_10_bitrate/index.mpd"
+          }
+        ]
+      },
+      {
+        "name": "video 2",
+        "playlist": [
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/video2_10_bitrate/index.mpd"
+          }
+        ]
+      },
+      {
+        "name": "video 3",
+        "playlist": [
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/video3_10_bitrate/index.mpd"
           }
         ]
       }

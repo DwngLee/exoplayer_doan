@@ -10,7 +10,6 @@ import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.Player;
-import com.google.android.exoplayer2.Tracks;
 import com.google.android.exoplayer2.analytics.AnalyticsListener;
 import com.google.android.exoplayer2.source.LoadEventInfo;
 import com.google.android.exoplayer2.source.MediaLoadData;
@@ -40,6 +39,7 @@ public class CustomAnalytics implements AnalyticsListener, Runnable {
   private static final String POWER_CONSUMPTION_FILE_NAME = "power_consumption_";
   private static final String VIDEO_PLAYBACK_DATA_FILE_NAME = "playback_data_";
   private static final String ENERGY_TAG = "PowerMonitor";
+  private static int previousRemaingEnergy = 0;
 
   public CustomAnalytics(Context context, BatteryManager batteryManager, Handler handler) {
     this.context = context;
@@ -59,8 +59,15 @@ public class CustomAnalytics implements AnalyticsListener, Runnable {
   }
 
   @Override
+  public void onIsPlayingChanged(EventTime eventTime, boolean isPlaying) {
+    AnalyticsListener.super.onIsPlayingChanged(eventTime, isPlaying);
+  }
+
+  @Override
   public void onLoadCompleted(EventTime eventTime, LoadEventInfo loadEventInfo,
       MediaLoadData mediaLoadData) {
+    logPowerConsumption();
+
     long mediaStartTimeMs = mediaLoadData.mediaStartTimeMs;
     long mediaEndTimeMs = mediaLoadData.mediaEndTimeMs;
     long segmentDuration = mediaEndTimeMs - mediaStartTimeMs;
@@ -89,6 +96,12 @@ public class CustomAnalytics implements AnalyticsListener, Runnable {
     }
   }
 
+  /* The player can be in one of four playback states:
+      - Player.STATE_IDLE: This is the initial state, the state when the player is stopped, and when playback failed. The player will hold only limited resources in this state.
+      - Player.STATE_BUFFERING: The player is not able to immediately play from its current position. This mostly happens because more data needs to be loaded.
+      - Player.STATE_READY: The player is able to immediately play from its current position.
+      - Player.STATE_ENDED: The player finished playing all media.
+  * */
   @Override
   public void onPlaybackStateChanged(EventTime eventTime, int state) {
     if (state == Player.STATE_BUFFERING) { //Tìm thời điểm xảy ra rebuffering
@@ -116,10 +129,12 @@ public class CustomAnalytics implements AnalyticsListener, Runnable {
       saveVideoPlaybackData(fileName);
     }
   }
+  //Whenever the player changes to a new media item in the playlist, this method is called
   @Override
   public void onMediaItemTransition(EventTime eventTime, @Nullable MediaItem mediaItem,
       int reason) {
     if (mediaItem != null && !isLastVideoEnded) {
+      captureRemainingEnergy();
       String fileName = FileService.generateFileName();
       savePowerConsumptionData(fileName);
       saveVideoPlaybackData(fileName);
@@ -144,24 +159,36 @@ public class CustomAnalytics implements AnalyticsListener, Runnable {
   private void logPowerConsumption() {
     if (batteryManager != null) {
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-        long energyCounter = batteryManager.getLongProperty(
+        int energyCounter = batteryManager.getIntProperty(
             BatteryManager.BATTERY_PROPERTY_ENERGY_COUNTER); //Năng lượng còn lại trong pin
         int capacity = batteryManager.getIntProperty(
             BatteryManager.BATTERY_PROPERTY_CAPACITY); //Dung lượng pin còn lại theo %
         long currentNow = batteryManager.getLongProperty(
-            BatteryManager.BATTERY_PROPERTY_CURRENT_NOW); //Dòng điện hiện tại pin đang cung cấp hoặc nhận. Giá trị âm tức là đang sạc (nhận)
+            BatteryManager.BATTERY_PROPERTY_CURRENT_NOW); //Dòng điện hiện tại pin đang cung cấp hoặc nhận. Giá trị âm tức là đang sạc (nhận) theo microamperes
         long currentAverage = batteryManager.getLongProperty(
             BatteryManager.BATTERY_PROPERTY_CURRENT_AVERAGE); //Dòng điện trung bình pin đã cung cấp trong 1 time
         long chargeCounter =
             batteryManager.getLongProperty(BatteryManager.BATTERY_PROPERTY_CHARGE_COUNTER)
                 / 1000000; //Dung lượng còn lại của pin
         String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-        String data = capacity + "," + currentNow + "," + timeStamp + "\n";
+        String data = energyCounter + "," + (energyCounter- previousRemaingEnergy) + "," + currentNow + "," + timeStamp + "\n";
         dataOutput += data;
+        previousRemaingEnergy = energyCounter;
         Log.i(ENERGY_TAG, "Remaining battery capacity = " + capacity + " %" + ", "
             + "Instantaneous battery current = " + currentNow + " µA" + ", "
+            + "Nang luong con lai = " + energyCounter + " µA" + ", "
             + "Average battery current = " + currentAverage + " µA" + ", "
             + "Remaining battery capacity = " + chargeCounter + " µAh");
+      }
+    }
+  }
+
+  private void captureRemainingEnergy() {
+    if (batteryManager != null) {
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        int energyCounter = batteryManager.getIntProperty(
+            BatteryManager.BATTERY_PROPERTY_ENERGY_COUNTER);
+        previousRemaingEnergy = energyCounter;
       }
     }
   }
@@ -172,7 +199,7 @@ public class CustomAnalytics implements AnalyticsListener, Runnable {
 
   @Override
   public void run() {
-    logPowerConsumption();
-    handler.postDelayed(this, 1000);
+//    logPowerConsumption();
+//    handler.postDelayed(this, 1000);
   }
 }

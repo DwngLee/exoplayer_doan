@@ -485,23 +485,12 @@ public class AdaptiveTrackSelection extends BaseTrackSelection {
       previousSelectedIndex = formatIndexOfPreviousChunk;
       previousReason = Iterables.getLast(queue).trackSelectionReason;
     }
-    int newSelectedIndex = determineIdealSelectedIndexButHaveQoEAndPowerConsumption(nowMs,
-        chunkDurationUs);
-//    int newSelectedIndex = determineIdealSelectedIndex(nowMs, chunkDurationUs);
-    Format previousFormat = getFormat(previousSelectedIndex);
-    Format newFormat = getFormat(newSelectedIndex);
-    double M = 4.3;
-    Log.i("EffectiveBitrate", effectiveBitrateForSegment + "");
-
-    double T = newFormat.bitrate * 2 / effectiveBitrateForSegment - bufferedDurationUs / 1000000;
-
-    double QoE = newFormat.bitrate / 1000 - M * T * 100 - Math.abs(
-        newFormat.bitrate / 1000 - previousFormat.bitrate / 1000);
-
-    double power = (-0.1144 * newFormat.bitrate/1000 * newFormat.bitrate/1000
-        + 2003.1 * newFormat.bitrate/1000 + 30000000);//hàm tính cs
-
-    Log.i("Infomation:::", String.format("%.2f,%.2f,%d,%d", QoE, power, newFormat.bitrate, bufferedDurationUs/1000000));
+//    int newSelectedIndex = determineIdealSelectedIndexButHaveQoEAndPowerConsumption(nowMs,
+//        chunkDurationUs);
+    int newSelectedIndex = newDetermineIdealSelectedIndex(nowMs,
+        chunkDurationUs,
+        previousSelectedIndex,
+        bufferedDurationUs);
 
     if (newSelectedIndex != previousSelectedIndex
         && !isTrackExcluded(previousSelectedIndex, nowMs)) {
@@ -526,6 +515,23 @@ public class AdaptiveTrackSelection extends BaseTrackSelection {
     reason =
         newSelectedIndex == previousSelectedIndex ? previousReason : C.SELECTION_REASON_ADAPTIVE;
     selectedIndex = newSelectedIndex;
+
+    Format previousFormat = getFormat(previousSelectedIndex);
+    Format newFormat = getFormat(getSelectedIndex());
+    double M = 4.3;
+
+    Log.i("ChunkDuration", chunkDurationUs / 1000000 + "");
+
+    double T = newFormat.bitrate * (chunkDurationUs/1000000) / effectiveBitrateForSegment - bufferedDurationUs / 1000000;
+
+    double QoE = newFormat.bitrate / 1000 - M * T * 100 - Math.abs(
+        newFormat.bitrate / 1000 - previousFormat.bitrate / 1000);
+
+    double power = (-0.0012 * newFormat.bitrate/1000 * newFormat.bitrate/1000
+        + 20.107 * newFormat.bitrate/1000 + 237800);//hàm tính cs
+
+    Log.i("Infomation:::", String.format("%.2f,%.2f,%d,%d", QoE, power, newFormat.bitrate, bufferedDurationUs/1000000));
+
   }
 
   @Override
@@ -696,11 +702,11 @@ public class AdaptiveTrackSelection extends BaseTrackSelection {
           double QoE = determineFormat.bitrate / 1000 - M * T * 100 - Math.abs(
               determineFormat.bitrate / 1000 - currentFormat.bitrate / 1000);
 
-          double power = (-0.1144 * determineFormat.bitrate / 1000 * determineFormat.bitrate / 1000
-              + 2003.1 * determineFormat.bitrate / 1000 + 30000000);//hàm tính cs
+          double power = (-0.0012 * determineFormat.bitrate/1000 * determineFormat.bitrate/1000
+              + 20.107 * determineFormat.bitrate/1000 + 237800);//hàm tính cs
 //          double power = Double.valueOf(bandwidthMeter.getPowerConsumption());
 
-          double derivated_power = -0.22 * determineFormat.bitrate / 1000 + 2003;
+          double derivated_power = -0.0024 * determineFormat.bitrate / 1000 + 20.107;
 
           double JCost = 0;
 
