@@ -46,8 +46,10 @@ import com.google.android.exoplayer2.upstream.LoadErrorHandlingPolicy.FallbackSe
 import com.google.android.exoplayer2.upstream.LoaderErrorThrower;
 import com.google.android.exoplayer2.upstream.TransferListener;
 import com.google.android.exoplayer2.util.Assertions;
+import com.google.android.exoplayer2.util.Log;
 import com.google.common.collect.ImmutableMap;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -274,7 +276,7 @@ public class DefaultSsChunkSource implements SsChunkSource {
     }
     trackSelection.updateSelectedTrack(
         playbackPositionUs, bufferedDurationUs, timeToLiveEdgeUs, queue, chunkIterators);
-
+    Log.i("CalledInDefaultSSChunk", LocalDateTime.now().toString());
     long chunkStartTimeUs = streamElement.getStartTimeUs(chunkIndex);
     long chunkEndTimeUs = chunkStartTimeUs + streamElement.getChunkDurationUs(chunkIndex);
     long chunkSeekTimeUs = queue.isEmpty() ? loadPositionUs : C.TIME_UNSET;

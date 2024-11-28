@@ -46,6 +46,7 @@ import com.google.common.collect.MultimapBuilder;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -474,6 +475,7 @@ public class AdaptiveTrackSelection extends BaseTrackSelection {
     if (reason == C.SELECTION_REASON_UNKNOWN) {
       reason = C.SELECTION_REASON_INITIAL;
       selectedIndex = determineIdealSelectedIndex(nowMs, chunkDurationUs);
+      Log.i("NoReason", LocalDateTime.now().toString());
       return;
     }
 
@@ -485,12 +487,12 @@ public class AdaptiveTrackSelection extends BaseTrackSelection {
       previousSelectedIndex = formatIndexOfPreviousChunk;
       previousReason = Iterables.getLast(queue).trackSelectionReason;
     }
-//    int newSelectedIndex = determineIdealSelectedIndexButHaveQoEAndPowerConsumption(nowMs,
-//        chunkDurationUs);
-    int newSelectedIndex = newDetermineIdealSelectedIndex(nowMs,
-        chunkDurationUs,
-        previousSelectedIndex,
-        bufferedDurationUs);
+    int newSelectedIndex = determineIdealSelectedIndexButHaveQoEAndPowerConsumption(nowMs,
+        chunkDurationUs);
+//    int newSelectedIndex = newDetermineIdealSelectedIndex(nowMs,
+//        chunkDurationUs,
+//        previousSelectedIndex,
+//        bufferedDurationUs);
 
     if (newSelectedIndex != previousSelectedIndex
         && !isTrackExcluded(previousSelectedIndex, nowMs)) {
@@ -690,14 +692,14 @@ public class AdaptiveTrackSelection extends BaseTrackSelection {
     long effectiveBitrate = getAllocatedBandwidth(chunkDurationUs);
     Format currentFormat = getFormat(previousSelectedIndex);
     double M = 4.3;
-    double Jcostmin = 99999999.0;
+    double Jcostmax = -9999999.0;
 
     int lowestBitrateAllowedIndex = 0;
     for (int i = 0; i < length; i++) {
       if (nowMs == Long.MIN_VALUE || !isTrackExcluded(i, nowMs)) {
         Format determineFormat = getFormat(i);
         if (canSelectFormat(determineFormat, determineFormat.bitrate, effectiveBitrate)) {
-          double T = determineFormat.bitrate * 2 / effectiveBitrate - bufferedDurationUs / 1000000;
+          double T = determineFormat.bitrate * (chunkDurationUs/1000000) / effectiveBitrate - bufferedDurationUs / 1000000;
 
           double QoE = determineFormat.bitrate / 1000 - M * T * 100 - Math.abs(
               determineFormat.bitrate / 1000 - currentFormat.bitrate / 1000);
@@ -711,20 +713,19 @@ public class AdaptiveTrackSelection extends BaseTrackSelection {
           double JCost = 0;
 
           if (determineFormat.bitrate > currentFormat.bitrate) {
-            JCost = 1 / QoE;
+            JCost = QoE;
           } else if (determineFormat.bitrate == currentFormat.bitrate) {
-            JCost = 1 / QoE
-                +
-                1 / (currentFormat.bitrate / 1000 * currentFormat.bitrate / 1000 * derivated_power)
+            JCost = QoE
+                - 1 / (currentFormat.bitrate / 1000 * currentFormat.bitrate / 1000 * derivated_power)
                     * power;
           } else {
-            JCost = 1 / QoE
-                + 2 / ((2 * currentFormat.bitrate / 1000 - determineFormat.bitrate / 1000) * (
+            JCost = QoE
+                - 2 / ((2 * currentFormat.bitrate / 1000 - determineFormat.bitrate / 1000) * (
                 2 * currentFormat.bitrate / 1000 - determineFormat.bitrate / 1000)
                 * derivated_power) * power;
           }
-          if (JCost < Jcostmin) {
-            Jcostmin = JCost;
+          if (JCost > Jcostmax) {
+            Jcostmax = JCost;
             lowestBitrateAllowedIndex = i;
             effectiveBitrateForSegment = effectiveBitrate;
           }

@@ -43,6 +43,7 @@ import com.google.android.exoplayer2.util.Assertions;
 import com.google.android.exoplayer2.util.Log;
 import com.google.android.exoplayer2.util.Util;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -567,6 +568,7 @@ public class ChunkSampleStream<T extends ChunkSource>
   @Override
   public boolean continueLoading(long positionUs) {
     if (loadingFinished || loader.isLoading() || loader.hasFatalError()) {
+      Log.i("ContinueLoadingStop", loadingFinished + " " + loader.isLoading() + " " + loader.hasFatalError());
       return false;
     }
 

@@ -53,9 +53,11 @@ import com.google.android.exoplayer2.upstream.HttpDataSource.InvalidResponseCode
 import com.google.android.exoplayer2.upstream.LoadErrorHandlingPolicy;
 import com.google.android.exoplayer2.upstream.LoaderErrorThrower;
 import com.google.android.exoplayer2.upstream.TransferListener;
+import com.google.android.exoplayer2.util.Log;
 import com.google.android.exoplayer2.util.Util;
 import com.google.common.collect.ImmutableMap;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -326,6 +328,7 @@ public class DefaultDashChunkSource implements DashChunkSource {
       List<? extends MediaChunk> queue,
       ChunkHolder out) {
     if (fatalError != null) {
+      Log.e("FatalError", LocalDateTime.now().toString());
       return;
     }
 
@@ -375,7 +378,7 @@ public class DefaultDashChunkSource implements DashChunkSource {
     long availableLiveDurationUs = getAvailableLiveDurationUs(nowUnixTimeUs, playbackPositionUs);
     trackSelection.updateSelectedTrack(
         playbackPositionUs, bufferedDurationUs, availableLiveDurationUs, queue, chunkIterators);
-
+    Log.i("CalledInDefaultChunk", LocalDateTime.now().toString());
     int selectedTrackIndex = trackSelection.getSelectedIndex();
 
     @Nullable
