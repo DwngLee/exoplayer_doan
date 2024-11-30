@@ -910,7 +910,7 @@
         "name": "video 1",
         "playlist": [
           {
-            "uri": "https://exo.dwngle.me/public/streaming/video1_10_bitrate/index.mpd"
+            "uri": "http://192.168.1.2:4010/public/streaming/video1_10_bitrate/index.mpd"
           }
         ]
       },
