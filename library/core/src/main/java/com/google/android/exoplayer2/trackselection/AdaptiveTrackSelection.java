@@ -506,8 +506,9 @@ public class AdaptiveTrackSelection extends BaseTrackSelection {
     Log.i("ChunkDuration", chunkDurationUs / 1000000 + "");
 
     double T = newFormat.bitrate * (chunkDurationUs/1000000) / effectiveBitrateForSegment - bufferedDurationUs / 1000000;
+    T = T < 0 ? 0 : T;
 
-    double QoE = newFormat.bitrate / 1000 - M * T * 100 - Math.abs(
+    double QoE = newFormat.bitrate / 1000 + M * T * 100 - Math.abs(
         newFormat.bitrate / 1000 - previousFormat.bitrate / 1000);
 
     double power = (-0.0012 * newFormat.bitrate/1000 * newFormat.bitrate/1000
@@ -656,7 +657,7 @@ public class AdaptiveTrackSelection extends BaseTrackSelection {
       if (nowMs == Long.MIN_VALUE || !isTrackExcluded(i, nowMs)) {
         Format format = getFormat(i);
         if (canSelectFormat(format, format.bitrate, effectiveBitrate)) {
-          effectiveBitrateForSegment = effectiveBitrate;
+          Log.i("BitrateOfFormat", i + "\t" + format.bitrate + "\t" + format.width + "\t" + format.height);
           return i;
         } else {
           lowestBitrateAllowedIndex = i;
@@ -678,10 +679,13 @@ public class AdaptiveTrackSelection extends BaseTrackSelection {
     double effectivePower = 0;
 
     int lowestBitrateAllowedIndex = 0;
-    for (int i = 0; i < length; i++) {
+    int i =0;
+    for (i = 0; i < length; i++) {
       Format determineFormat = getFormat(i);
       double T = determineFormat.bitrate * (chunkDurationUs / 1000000) / effectiveBitrate
           - bufferedDurationUs / 1000000;
+
+      T = T < 0 ? 0 : T;
 
       double QoE = determineFormat.bitrate / 1000 - M * T * 100 - Math.abs(
           determineFormat.bitrate / 1000 - currentFormat.bitrate / 1000);
@@ -706,17 +710,17 @@ public class AdaptiveTrackSelection extends BaseTrackSelection {
             2 * currentFormat.bitrate / 1000 - determineFormat.bitrate / 1000)
             * derivated_power) * power;
       }
+
       if (JCost > Jcostmax) {
         Jcostmax = JCost;
         effectiveQoE = QoE;
         effectivePower = power;
         effectiveBitrateForSegment = effectiveBitrate;
-      }else{
-//        lowestBitrateAllowedIndex = i;
+        Log.i("Jcost>Jcostmax", "\t" + "1");
+        lowestBitrateAllowedIndex = i;
       }
     }
-    int selectedIndex = lowestBitrateAllowedIndex;
-    return selectedIndex;
+    return lowestBitrateAllowedIndex;
   }
 
 

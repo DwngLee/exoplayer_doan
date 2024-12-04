@@ -552,6 +552,22 @@
         ]
       },
       {
+        "name": "Video a Minh - 2 - Sigle Res - Multi Bitrate",
+        "playlist": [
+          {
+            "uri": "https://dash.akamaized.net/dash264/TestCases/1b/qualcomm/1/MultiRatePatched.mpd"
+          }
+        ]
+      },
+      {
+        "name": "Video a Minh - 3 - Multi Res - Multi Bitrate",
+        "playlist": [
+          {
+            "uri": "https://dash.akamaized.net/dash264/TestCases/2b/qualcomm/1/MultiResMPEG2.mpd"
+          }
+        ]
+      },
+      {
         "name": "Manual ad insertion",
         "playlist": [
           {
