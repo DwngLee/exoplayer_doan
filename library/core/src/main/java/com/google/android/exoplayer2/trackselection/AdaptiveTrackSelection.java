@@ -718,6 +718,8 @@ public class AdaptiveTrackSelection extends BaseTrackSelection {
         effectiveBitrateForSegment = effectiveBitrate;
         Log.i("Jcost>Jcostmax", "\t" + "1");
         lowestBitrateAllowedIndex = i;
+      }else{
+        return i-1;
       }
     }
     return lowestBitrateAllowedIndex;
