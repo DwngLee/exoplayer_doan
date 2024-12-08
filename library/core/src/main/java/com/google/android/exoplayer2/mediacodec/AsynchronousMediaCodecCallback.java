@@ -60,7 +60,7 @@ import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 
   @GuardedBy("lock")
   @Nullable
-  private MediaFormat currentFormat;
+  private MediaFormat previousBitrate;
 
   @GuardedBy("lock")
   @Nullable
@@ -162,7 +162,7 @@ import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
         } else {
           int bufferIndex = availableOutputBuffers.remove();
           if (bufferIndex >= 0) {
-            checkStateNotNull(currentFormat);
+            checkStateNotNull(previousBitrate);
             MediaCodec.BufferInfo nextBufferInfo = bufferInfos.remove();
             bufferInfo.set(
                 nextBufferInfo.offset,
@@ -170,7 +170,7 @@ import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
                 nextBufferInfo.presentationTimeUs,
                 nextBufferInfo.flags);
           } else if (bufferIndex == MediaCodec.INFO_OUTPUT_FORMAT_CHANGED) {
-            currentFormat = formats.remove();
+            previousBitrate = formats.remove();
           }
           return bufferIndex;
         }
@@ -189,10 +189,10 @@ import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
    */
   public MediaFormat getOutputFormat() {
     synchronized (lock) {
-      if (currentFormat == null) {
+      if (previousBitrate == null) {
         throw new IllegalStateException();
       }
-      return currentFormat;
+      return previousBitrate;
     }
   }
 

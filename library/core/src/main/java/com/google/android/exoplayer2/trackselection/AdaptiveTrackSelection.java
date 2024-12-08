@@ -474,8 +474,22 @@ public class AdaptiveTrackSelection extends BaseTrackSelection {
     // Make initial selection
     if (reason == C.SELECTION_REASON_UNKNOWN) {
       reason = C.SELECTION_REASON_INITIAL;
-      selectedIndex = determineIdealSelectedIndex(nowMs, chunkDurationUs);
-      Log.i("NoReason", LocalDateTime.now().toString());
+      selectedIndex = newDetermineIdealSelectedIndex(nowMs, chunkDurationUs, 0 , 0);
+//      selectedIndex = determineIdealSelectedIndexButHaveQoEAndPowerConsumption(nowMs, chunkDurationUs);
+
+      Format newFormat = getFormat(selectedIndex);
+      double M = 4.3;
+
+      double T = newFormat.bitrate * (chunkDurationUs/1000000) / effectiveBitrateForSegment - 0;
+
+      double QoE = newFormat.bitrate / 1000 - M * T * 100 - Math.abs(
+          newFormat.bitrate / 1000 - 0);
+
+      double power = (-0.0012 * newFormat.bitrate/1000 * newFormat.bitrate/1000
+          + 20.107 * newFormat.bitrate/1000 + 237800);//hàm tính cs
+
+      Log.i("Infomation:::", String.format("%.2f,%.2f,%d,%d", QoE, power, newFormat.bitrate, bufferedDurationUs/1000000));
+
       return;
     }
 
@@ -489,9 +503,11 @@ public class AdaptiveTrackSelection extends BaseTrackSelection {
     }
 //    int newSelectedIndex = determineIdealSelectedIndexButHaveQoEAndPowerConsumption(nowMs,
 //        chunkDurationUs);
+
+    Format previousFormat = getFormat(previousSelectedIndex);
     int newSelectedIndex = newDetermineIdealSelectedIndex(nowMs,
         chunkDurationUs,
-        previousSelectedIndex,
+        previousFormat.bitrate,
         bufferedDurationUs);
 
     // If we adapted, update the trigger.
@@ -499,23 +515,20 @@ public class AdaptiveTrackSelection extends BaseTrackSelection {
         newSelectedIndex == previousSelectedIndex ? previousReason : C.SELECTION_REASON_ADAPTIVE;
     selectedIndex = newSelectedIndex;
 
-    Format previousFormat = getFormat(previousSelectedIndex);
     Format newFormat = getFormat(getSelectedIndex());
     double M = 4.3;
 
-    Log.i("ChunkDuration", chunkDurationUs / 1000000 + "");
+    Log.i("playbackPositionUs", playbackPositionUs / 1000000 + "");
 
     double T = newFormat.bitrate * (chunkDurationUs/1000000) / effectiveBitrateForSegment - bufferedDurationUs / 1000000;
-    T = T < 0 ? 0 : T;
 
-    double QoE = newFormat.bitrate / 1000 + M * T * 100 - Math.abs(
+    double QoE = newFormat.bitrate / 1000 - M * T * 100 - Math.abs(
         newFormat.bitrate / 1000 - previousFormat.bitrate / 1000);
 
     double power = (-0.0012 * newFormat.bitrate/1000 * newFormat.bitrate/1000
         + 20.107 * newFormat.bitrate/1000 + 237800);//hàm tính cs
 
     Log.i("Infomation:::", String.format("%.2f,%.2f,%d,%d", QoE, power, newFormat.bitrate, bufferedDurationUs/1000000));
-
   }
 
   @Override
@@ -555,6 +568,7 @@ public class AdaptiveTrackSelection extends BaseTrackSelection {
     if (playoutBufferedDurationBeforeLastChunkUs < minDurationToRetainAfterDiscardUs) {
       return queueSize;
     }
+    Log.i("re_evaluate", lastChunk.trackFormat.bitrate + "");
     int idealSelectedIndex = determineIdealSelectedIndex(nowMs, getLastChunkDurationUs(queue));
     Format idealFormat = getFormat(idealSelectedIndex);
     // If chunks contain video, discard from the first chunk after minDurationToRetainAfterDiscardUs
@@ -657,7 +671,7 @@ public class AdaptiveTrackSelection extends BaseTrackSelection {
       if (nowMs == Long.MIN_VALUE || !isTrackExcluded(i, nowMs)) {
         Format format = getFormat(i);
         if (canSelectFormat(format, format.bitrate, effectiveBitrate)) {
-          Log.i("BitrateOfFormat", i + "\t" + format.bitrate + "\t" + format.width + "\t" + format.height);
+          effectiveBitrateForSegment = effectiveBitrate;
           return i;
         } else {
           lowestBitrateAllowedIndex = i;
@@ -669,69 +683,64 @@ public class AdaptiveTrackSelection extends BaseTrackSelection {
 
   private int newDetermineIdealSelectedIndex(long nowMs,
       long chunkDurationUs,
-      int previousSelectedIndex,
+      int previousBitrate,
       long bufferedDurationUs) {
     long effectiveBitrate = getAllocatedBandwidth(chunkDurationUs);
-    Format currentFormat = getFormat(previousSelectedIndex);
+    
     double M = 4.3;
     double Jcostmax = -9999999.0;
     double effectiveQoE = 0;
     double effectivePower = 0;
 
     int lowestBitrateAllowedIndex = 0;
-    int i =0;
-    for (i = 0; i < length; i++) {
+    for (int i = 0; i < length; i++) {
       Format determineFormat = getFormat(i);
-      double T = determineFormat.bitrate * (chunkDurationUs / 1000000) / effectiveBitrate
-          - bufferedDurationUs / 1000000;
+        double T = determineFormat.bitrate * (chunkDurationUs / 1000000) / effectiveBitrate
+            - bufferedDurationUs / 1000000;
 
-      T = T < 0 ? 0 : T;
+        double QoE = determineFormat.bitrate / 1000 - M * T * 100 - Math.abs(
+            determineFormat.bitrate / 1000 - previousBitrate / 1000);
 
-      double QoE = determineFormat.bitrate / 1000 - M * T * 100 - Math.abs(
-          determineFormat.bitrate / 1000 - currentFormat.bitrate / 1000);
-
-      double power = (-0.0012 * determineFormat.bitrate / 1000 * determineFormat.bitrate / 1000
-          + 20.107 * determineFormat.bitrate / 1000 + 237800);//hàm tính cs
+        double power = (-0.0012 * determineFormat.bitrate / 1000 * determineFormat.bitrate / 1000
+            + 20.107 * determineFormat.bitrate / 1000 + 237800);//hàm tính cs
 //          double power = Double.valueOf(bandwidthMeter.getPowerConsumption());
 
-      double derivated_power = -0.0024 * determineFormat.bitrate / 1000 + 20.107;
+        double derivated_power = -0.0024 * determineFormat.bitrate / 1000 + 20.107;
 
-      double JCost = 0;
+        double JCost = 0;
 
-      if (determineFormat.bitrate > currentFormat.bitrate) {
-        JCost = QoE;
-      } else if (determineFormat.bitrate == currentFormat.bitrate) {
-        JCost = QoE
-            - 1 / (currentFormat.bitrate / 1000 * currentFormat.bitrate / 1000 * derivated_power)
-            * power;
-      } else {
-        JCost = QoE
-            - 2 / ((2 * currentFormat.bitrate / 1000 - determineFormat.bitrate / 1000) * (
-            2 * currentFormat.bitrate / 1000 - determineFormat.bitrate / 1000)
-            * derivated_power) * power;
+        if (determineFormat.bitrate > previousBitrate) {
+          JCost = QoE;
+        } else if (determineFormat.bitrate == previousBitrate) {
+          JCost = QoE
+              - 1 / (previousBitrate / 1000 * previousBitrate / 1000 * derivated_power)
+              * power;
+        } else {
+          JCost = QoE
+              - 2 / ((2 * previousBitrate / 1000 - determineFormat.bitrate / 1000) * (
+              2 * previousBitrate / 1000 - determineFormat.bitrate / 1000)
+              * derivated_power) * power;
+        }
+        if (JCost > Jcostmax) {
+          Jcostmax = JCost;
+          effectiveQoE = QoE;
+          effectivePower = power;
+          effectiveBitrateForSegment = effectiveBitrate;
+          lowestBitrateAllowedIndex = i;
+        }else{
+          return i-1;
+        }
       }
-
-      if (JCost > Jcostmax) {
-        Jcostmax = JCost;
-        effectiveQoE = QoE;
-        effectivePower = power;
-        effectiveBitrateForSegment = effectiveBitrate;
-        Log.i("Jcost>Jcostmax", "\t" + "1");
-        lowestBitrateAllowedIndex = i;
-      }else{
-        return i-1;
-      }
-    }
     return lowestBitrateAllowedIndex;
   }
 
 
-  private boolean canSelectFormat(Format currentFormat, Format determineFormat,
+  private boolean canSelectFormat(Format previousBitrate, Format determineFormat,
       long effectiveBitrate) {
-    if (determineFormat.bitrate > currentFormat.bitrate) {
+    if (determineFormat.bitrate > previousBitrate.bitrate) {
       return true;
     }
-    return currentFormat.bitrate <= effectiveBitrate;
+    return previousBitrate.bitrate <= effectiveBitrate;
   }
 
   private long minDurationForQualityIncreaseUs(long availableDurationUs, long chunkDurationUs) {

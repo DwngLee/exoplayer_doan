@@ -424,7 +424,7 @@ public class AsynchronousMediaCodecCallbackTest {
   }
 
   @Test
-  public void getOutputFormat_afterFlush_returnsCurrentFormat() {
+  public void getOutputFormat_afterFlush_returnspreviousBitrate() {
     MediaFormat format = new MediaFormat();
     Looper callbackThreadLooper = callbackThread.getLooper();
     AtomicBoolean flushCompleted = new AtomicBoolean();

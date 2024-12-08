@@ -588,7 +588,7 @@
         "name": "Brighness Normal",
         "playlist": [
           {
-            "uri": "https://exo.dwngle.me/public/streaming/streaming3/index.mpd"
+            "uri": "http://192.168.1.2:4010/public/streaming/streaming3/index.mpd"
           }
         ]
       }
@@ -597,7 +597,7 @@
         "name": "Brighness Dark",
         "playlist": [
           {
-            "uri": "https://exo.dwngle.me/public/streaming/brightness_and_contrast/darker/index.mpd"
+            "uri": "http://192.168.1.2:4010/public/streaming/brightness_and_contrast/darker/index.mpd"
           }
         ]
       }
@@ -606,7 +606,7 @@
         "name": "Brighness Light",
         "playlist": [
           {
-            "uri": "https://exo.dwngle.me/public/streaming/brightness_and_contrast/lighter/index.mpd"
+            "uri": "http://192.168.1.2:4010/public/streaming/brightness_and_contrast/lighter/index.mpd"
           }
         ]
       },
@@ -614,7 +614,7 @@
         "name": "1920x1080 10 bitrate",
         "playlist": [
           {
-            "uri": "https://exo.dwngle.me/public/streaming/1920x1080_10_bitrate/index.mpd"
+            "uri": "http://192.168.1.2:4010/public/streaming/1920x1080_10_bitrate/index.mpd"
           }
         ]
       }
@@ -720,7 +720,7 @@
         "name": "200k",
         "playlist": [
           {
-            "uri": "https://exo.dwngle.me/public/streaming/diff_bitrate/200/index.mpd"
+            "uri": "http://192.168.1.2:4010/public/streaming/diff_bitrate/200/index.mpd"
           }
         ]
       },
@@ -728,7 +728,7 @@
         "name": "400k",
         "playlist": [
           {
-            "uri": "https://exo.dwngle.me/public/streaming/diff_bitrate/400/index.mpd"
+            "uri": "http://192.168.1.2:4010/public/streaming/diff_bitrate/400/index.mpd"
           }
         ]
       },
@@ -736,56 +736,56 @@
         "name": "600k",
         "playlist": [
           {
-            "uri": "https://exo.dwngle.me/public/streaming/diff_bitrate/600/index.mpd"
+            "uri": "http://192.168.1.2:4010/public/streaming/diff_bitrate/600/index.mpd"
           }
         ]
       },{
         "name": "800k",
         "playlist": [
           {
-            "uri": "https://exo.dwngle.me/public/streaming/diff_bitrate/800/index.mpd"
+            "uri": "http://192.168.1.2:4010/public/streaming/diff_bitrate/800/index.mpd"
           }
         ]
       },{
         "name": "1000k",
         "playlist": [
           {
-            "uri": "https://exo.dwngle.me/public/streaming/diff_bitrate/1000/index.mpd"
+            "uri": "http://192.168.1.2:4010/public/streaming/diff_bitrate/1000/index.mpd"
           }
         ]
       },{
         "name": "1500k",
         "playlist": [
           {
-            "uri": "https://exo.dwngle.me/public/streaming/diff_bitrate/1500/index.mpd"
+            "uri": "http://192.168.1.2:4010/public/streaming/diff_bitrate/1500/index.mpd"
           }
         ]
       },{
         "name": "2500k",
         "playlist": [
           {
-            "uri": "https://exo.dwngle.me/public/streaming/diff_bitrate/2500/index.mpd"
+            "uri": "http://192.168.1.2:4010/public/streaming/diff_bitrate/2500/index.mpd"
           }
         ]
       },{
         "name": "4000k",
         "playlist": [
           {
-            "uri": "https://exo.dwngle.me/public/streaming/diff_bitrate/4000/index.mpd"
+            "uri": "http://192.168.1.2:4010/public/streaming/diff_bitrate/4000/index.mpd"
           }
         ]
       },{
         "name": "800k",
         "playlist": [
           {
-            "uri": "https://exo.dwngle.me/public/streaming/diff_bitrate/8000/index.mpd"
+            "uri": "http://192.168.1.2:4010/public/streaming/diff_bitrate/8000/index.mpd"
           }
         ]
       },{
         "name": "12000k",
         "playlist": [
           {
-            "uri": "https://exo.dwngle.me/public/streaming/diff_bitrate/12000/index.mpd"
+            "uri": "http://192.168.1.2:4010/public/streaming/diff_bitrate/12000/index.mpd"
           }
         ]
       },
@@ -793,34 +793,34 @@
         "name": "Playlist 10 bitrate (each video is one bitrate)",
         "playlist": [
           {
-            "uri": "https://exo.dwngle.me/public/streaming/diff_bitrate/200/index.mpd"
+            "uri": "http://192.168.1.2:4010/public/streaming/diff_bitrate/200/index.mpd"
           },
           {
-            "uri": "https://exo.dwngle.me/public/streaming/diff_bitrate/400/index.mpd"
+            "uri": "http://192.168.1.2:4010/public/streaming/diff_bitrate/400/index.mpd"
           },
           {
-            "uri": "https://exo.dwngle.me/public/streaming/diff_bitrate/600/index.mpd"
+            "uri": "http://192.168.1.2:4010/public/streaming/diff_bitrate/600/index.mpd"
           },
           {
-            "uri": "https://exo.dwngle.me/public/streaming/diff_bitrate/800/index.mpd"
+            "uri": "http://192.168.1.2:4010/public/streaming/diff_bitrate/800/index.mpd"
           },
           {
-            "uri": "https://exo.dwngle.me/public/streaming/diff_bitrate/1000/index.mpd"
+            "uri": "http://192.168.1.2:4010/public/streaming/diff_bitrate/1000/index.mpd"
           },
           {
-            "uri": "https://exo.dwngle.me/public/streaming/diff_bitrate/1500/index.mpd"
+            "uri": "http://192.168.1.2:4010/public/streaming/diff_bitrate/1500/index.mpd"
           },
           {
-            "uri": "https://exo.dwngle.me/public/streaming/diff_bitrate/2500/index.mpd"
+            "uri": "http://192.168.1.2:4010/public/streaming/diff_bitrate/2500/index.mpd"
           },
           {
-            "uri": "https://exo.dwngle.me/public/streaming/diff_bitrate/4000/index.mpd"
+            "uri": "http://192.168.1.2:4010/public/streaming/diff_bitrate/4000/index.mpd"
           },
           {
-            "uri": "https://exo.dwngle.me/public/streaming/diff_bitrate/8000/index.mpd"
+            "uri": "http://192.168.1.2:4010/public/streaming/diff_bitrate/8000/index.mpd"
           },
           {
-            "uri": "https://exo.dwngle.me/public/streaming/diff_bitrate/12000/index.mpd"
+            "uri": "http://192.168.1.2:4010/public/streaming/diff_bitrate/12000/index.mpd"
           }
         ]
       },
@@ -828,34 +828,34 @@
         "name": "Playlist 10 bitrate with resolution",
         "playlist": [
           {
-            "uri": "https://exo.dwngle.me/public/streaming/resolution_w_bitrate/320x180_200k/index.mpd"
+            "uri": "http://192.168.1.2:4010/public/streaming/resolution_w_bitrate/320x180_200k/index.mpd"
           },
           {
-            "uri": "https://exo.dwngle.me/public/streaming/resolution_w_bitrate/320x180_400k/index.mpd"
+            "uri": "http://192.168.1.2:4010/public/streaming/resolution_w_bitrate/320x180_400k/index.mpd"
           },
           {
-            "uri": "https://exo.dwngle.me/public/streaming/resolution_w_bitrate/480x270_600k/index.mpd"
+            "uri": "http://192.168.1.2:4010/public/streaming/resolution_w_bitrate/480x270_600k/index.mpd"
           },
           {
-            "uri": "https://exo.dwngle.me/public/streaming/resolution_w_bitrate/640x360_800k/index.mpd"
+            "uri": "http://192.168.1.2:4010/public/streaming/resolution_w_bitrate/640x360_800k/index.mpd"
           },
           {
-            "uri": "https://exo.dwngle.me/public/streaming/resolution_w_bitrate/640x360_1000k/index.mpd"
+            "uri": "http://192.168.1.2:4010/public/streaming/resolution_w_bitrate/640x360_1000k/index.mpd"
           },
           {
-            "uri": "https://exo.dwngle.me/public/streaming/resolution_w_bitrate/768x432_1500k/index.mpd"
+            "uri": "http://192.168.1.2:4010/public/streaming/resolution_w_bitrate/768x432_1500k/index.mpd"
           },
           {
-            "uri": "https://exo.dwngle.me/public/streaming/resolution_w_bitrate/1024x576_2500k/index.mpd"
+            "uri": "http://192.168.1.2:4010/public/streaming/resolution_w_bitrate/1024x576_2500k/index.mpd"
           },
           {
-            "uri": "https://exo.dwngle.me/public/streaming/resolution_w_bitrate/1280x720_4000k/index.mpd"
+            "uri": "http://192.168.1.2:4010/public/streaming/resolution_w_bitrate/1280x720_4000k/index.mpd"
           },
           {
-            "uri": "https://exo.dwngle.me/public/streaming/resolution_w_bitrate/1920x1080_8000k/index.mpd"
+            "uri": "http://192.168.1.2:4010/public/streaming/resolution_w_bitrate/1920x1080_8000k/index.mpd"
           },
           {
-            "uri": "https://exo.dwngle.me/public/streaming/resolution_w_bitrate/3840x2160_12000k/index.mpd"
+            "uri": "http://192.168.1.2:4010/public/streaming/resolution_w_bitrate/3840x2160_12000k/index.mpd"
           }
         ]
       }
@@ -868,7 +868,7 @@
         "name": "video 1",
         "playlist": [
           {
-            "uri": "https://exo.dwngle.me/public/streaming/1280x720_10_bitrate/video1/index.mpd"
+            "uri": "http://192.168.1.2:4010/public/streaming/1280x720_10_bitrate/video1/index.mpd"
           }
         ]
       },
@@ -876,7 +876,7 @@
         "name": "video 2",
         "playlist": [
           {
-            "uri": "https://exo.dwngle.me/public/streaming/1280x720_10_bitrate/video2/index.mpd"
+            "uri": "http://192.168.1.2:4010/public/streaming/1280x720_10_bitrate/video2/index.mpd"
           }
         ]
       },
@@ -884,7 +884,7 @@
         "name": "video 3",
         "playlist": [
           {
-            "uri": "https://exo.dwngle.me/public/streaming/1280x720_10_bitrate/video3/index.mpd"
+            "uri": "http://192.168.1.2:4010/public/streaming/1280x720_10_bitrate/video3/index.mpd"
           }
         ]
       }
@@ -897,7 +897,7 @@
         "name": "video 1",
         "playlist": [
           {
-            "uri": "https://exo.dwngle.me/public/streaming/1920x1080_10_bitrate/video1/index.mpd"
+            "uri": "http://192.168.1.2:4010/public/streaming/1920x1080_10_bitrate/video1/index.mpd"
           }
         ]
       },
@@ -905,7 +905,7 @@
         "name": "video 2",
         "playlist": [
           {
-            "uri": "https://exo.dwngle.me/public/streaming/1920x1080_10_bitrate/video2/index.mpd"
+            "uri": "http://192.168.1.2:4010/public/streaming/1920x1080_10_bitrate/video2/index.mpd"
           }
         ]
       },
@@ -913,7 +913,7 @@
         "name": "video 3",
         "playlist": [
           {
-            "uri": "https://exo.dwngle.me/public/streaming/1920x1080_10_bitrate/video3/index.mpd"
+            "uri": "http://192.168.1.2:4010/public/streaming/1920x1080_10_bitrate/video3/index.mpd"
           }
         ]
       }
@@ -923,26 +923,50 @@
     "name": "real",
     "samples": [
       {
-        "name": "video 1",
+        "name": "coast 1",
         "playlist": [
           {
-            "uri": "http://192.168.1.2:4010/public/streaming/video1_10_bitrate/index.mpd"
+            "uri": "http://192.168.1.2:4010/public/streaming/multi_res_multi_bitrate/coast_1/index.mpd"
           }
         ]
       },
       {
-        "name": "video 2",
+        "name": "coast 1 with sound",
         "playlist": [
           {
-            "uri": "https://exo.dwngle.me/public/streaming/video2_10_bitrate/index.mpd"
+            "uri": "http://192.168.1.2:4010/public/streaming/multi_res_multi_bitrate/coast_1_w_sound/index.mpd"
           }
         ]
       },
       {
-        "name": "video 3",
+        "name": "coast 2",
         "playlist": [
           {
-            "uri": "https://exo.dwngle.me/public/streaming/video3_10_bitrate/index.mpd"
+            "uri": "http://192.168.1.2:4010/public/streaming/multi_res_multi_bitrate/coast_2/index.mpd"
+          }
+        ]
+      },
+      {
+        "name": "girl",
+        "playlist": [
+          {
+            "uri": "http://192.168.1.2:4010/public/streaming/multi_res_multi_bitrate/girl/index.mpd"
+          }
+        ]
+      },
+      {
+        "name": "woman work out",
+        "playlist": [
+          {
+            "uri": "http://192.168.1.2:4010/public/streaming/multi_res_multi_bitrate/woman_work_out/index.mpd"
+          }
+        ]
+      },
+      {
+        "name": "beach 1",
+        "playlist": [
+          {
+            "uri": "http://192.168.1.2:4010/public/streaming/multi_res_multi_bitrate/beach_1/index.mpd"
           }
         ]
       }

@@ -590,6 +590,7 @@ import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
         long availableDurationUs,
         List<? extends MediaChunk> queue,
         MediaChunkIterator[] mediaChunkIterators) {
+      Log.i("MergingTrack", "hehe");
       trackSelection.updateSelectedTrack(
           playbackPositionUs, bufferedDurationUs, availableDurationUs, queue, mediaChunkIterators);
     }

@@ -276,7 +276,7 @@ public class MediaCodecVideoRendererTest {
   }
 
   @Test
-  public void render_sendsVideoSizeChangeWithCurrentFormatValues() throws Exception {
+  public void render_sendsVideoSizeChangeWithpreviousBitrateValues() throws Exception {
     FakeSampleStream fakeSampleStream =
         new FakeSampleStream(
             new DefaultAllocator(/* trimOnReset= */ true, /* individualAllocationSize= */ 1024),
