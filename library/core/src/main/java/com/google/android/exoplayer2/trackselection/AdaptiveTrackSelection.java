@@ -501,14 +501,42 @@ public class AdaptiveTrackSelection extends BaseTrackSelection {
       previousSelectedIndex = formatIndexOfPreviousChunk;
       previousReason = Iterables.getLast(queue).trackSelectionReason;
     }
+    Format previousFormat = getFormat(previousSelectedIndex);
+
+    //Bắt đầu hàm gốc của exo
 //    int newSelectedIndex = determineIdealSelectedIndexButHaveQoEAndPowerConsumption(nowMs,
 //        chunkDurationUs);
+//
+//    if (newSelectedIndex != previousSelectedIndex
+//        && !isTrackExcluded(previousSelectedIndex, nowMs)) {
+//      // Revert back to the previous selection if conditions are not suitable for switching.
+//      Format currentFormat = getFormat(previousSelectedIndex);
+//      Format selectedFormat = getFormat(newSelectedIndex);
+//      long minDurationForQualityIncreaseUs =
+//          minDurationForQualityIncreaseUs(availableDurationUs, chunkDurationUs);
+//      if (selectedFormat.bitrate > currentFormat.bitrate
+//          && bufferedDurationUs < minDurationForQualityIncreaseUs) {
+//        // The selected track is a higher quality, but we have insufficient buffer to safely switch
+//        // up. Defer switching up for now.
+//        newSelectedIndex = previousSelectedIndex;
+//      } else if (selectedFormat.bitrate < currentFormat.bitrate
+//          && bufferedDurationUs >= maxDurationForQualityDecreaseUs) {
+//        // The selected track is a lower quality, but we have sufficient buffer to defer switching
+//        // down for now.
+//        newSelectedIndex = previousSelectedIndex;
+//      }
+//    }
 
-    Format previousFormat = getFormat(previousSelectedIndex);
+    //Kết thúc hàm gốc của exo
+
+    //Bắt đầu hàm chỉnh sửa
+
     int newSelectedIndex = newDetermineIdealSelectedIndex(nowMs,
         chunkDurationUs,
         previousFormat.bitrate,
         bufferedDurationUs);
+
+    //Kết thúc hàm chỉnh sửa
 
     // If we adapted, update the trigger.
     reason =
