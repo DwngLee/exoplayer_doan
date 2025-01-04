@@ -591,8 +591,7 @@
             "uri": "http://192.168.1.2:4010/public/streaming/streaming3/index.mpd"
           }
         ]
-      }
-    ,
+      },
       {
         "name": "Brighness Dark",
         "playlist": [
@@ -600,8 +599,7 @@
             "uri": "http://192.168.1.2:4010/public/streaming/brightness_and_contrast/darker/index.mpd"
           }
         ]
-      }
-    ,
+      },
       {
         "name": "Brighness Light",
         "playlist": [
@@ -739,49 +737,56 @@
             "uri": "http://192.168.1.2:4010/public/streaming/diff_bitrate/600/index.mpd"
           }
         ]
-      },{
+      },
+      {
         "name": "800k",
         "playlist": [
           {
             "uri": "http://192.168.1.2:4010/public/streaming/diff_bitrate/800/index.mpd"
           }
         ]
-      },{
+      },
+      {
         "name": "1000k",
         "playlist": [
           {
             "uri": "http://192.168.1.2:4010/public/streaming/diff_bitrate/1000/index.mpd"
           }
         ]
-      },{
+      },
+      {
         "name": "1500k",
         "playlist": [
           {
             "uri": "http://192.168.1.2:4010/public/streaming/diff_bitrate/1500/index.mpd"
           }
         ]
-      },{
+      },
+      {
         "name": "2500k",
         "playlist": [
           {
             "uri": "http://192.168.1.2:4010/public/streaming/diff_bitrate/2500/index.mpd"
           }
         ]
-      },{
+      },
+      {
         "name": "4000k",
         "playlist": [
           {
             "uri": "http://192.168.1.2:4010/public/streaming/diff_bitrate/4000/index.mpd"
           }
         ]
-      },{
+      },
+      {
         "name": "800k",
         "playlist": [
           {
             "uri": "http://192.168.1.2:4010/public/streaming/diff_bitrate/8000/index.mpd"
           }
         ]
-      },{
+      },
+      {
         "name": "12000k",
         "playlist": [
           {
@@ -790,37 +795,177 @@
         ]
       },
       {
-        "name": "Playlist 10 bitrate (each video is one bitrate)",
+        "name": "Playlist 10 bitrate - spider (each video is one bitrate)",
         "playlist": [
           {
-            "uri": "http://192.168.1.2:4010/public/streaming/diff_bitrate/200/index.mpd"
+            "uri": "https://exo.dwngle.me/public/streaming/spider/200/index.mpd"
           },
           {
-            "uri": "http://192.168.1.2:4010/public/streaming/diff_bitrate/400/index.mpd"
+            "uri": "https://exo.dwngle.me/public/streaming/spider/400/index.mpd"
           },
           {
-            "uri": "http://192.168.1.2:4010/public/streaming/diff_bitrate/600/index.mpd"
+            "uri": "https://exo.dwngle.me/public/streaming/spider/600/index.mpd"
           },
           {
-            "uri": "http://192.168.1.2:4010/public/streaming/diff_bitrate/800/index.mpd"
+            "uri": "https://exo.dwngle.me/public/streaming/spider/800/index.mpd"
           },
           {
-            "uri": "http://192.168.1.2:4010/public/streaming/diff_bitrate/1000/index.mpd"
+            "uri": "https://exo.dwngle.me/public/streaming/spider/1000/index.mpd"
           },
           {
-            "uri": "http://192.168.1.2:4010/public/streaming/diff_bitrate/1500/index.mpd"
+            "uri": "https://exo.dwngle.me/public/streaming/spider/1500/index.mpd"
           },
           {
-            "uri": "http://192.168.1.2:4010/public/streaming/diff_bitrate/2500/index.mpd"
+            "uri": "https://exo.dwngle.me/public/streaming/spider/2500/index.mpd"
           },
           {
-            "uri": "http://192.168.1.2:4010/public/streaming/diff_bitrate/4000/index.mpd"
+            "uri": "https://exo.dwngle.me/public/streaming/spider/4000/index.mpd"
           },
           {
-            "uri": "http://192.168.1.2:4010/public/streaming/diff_bitrate/8000/index.mpd"
+            "uri": "https://exo.dwngle.me/public/streaming/spider/8000/index.mpd"
           },
           {
-            "uri": "http://192.168.1.2:4010/public/streaming/diff_bitrate/12000/index.mpd"
+            "uri": "https://exo.dwngle.me/public/streaming/spider/12000/index.mpd"
+          }
+        ]
+      },
+      {
+        "name": "Playlist 10 bitrate - bulagira (each video is one bitrate)",
+        "playlist": [
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/bulagira/200/index.mpd"
+          },
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/bulagira/400/index.mpd"
+          },
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/bulagira/600/index.mpd"
+          },
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/bulagira/800/index.mpd"
+          },
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/bulagira/1000/index.mpd"
+          },
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/bulagira/1500/index.mpd"
+          },
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/bulagira/2500/index.mpd"
+          },
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/bulagira/4000/index.mpd"
+          },
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/bulagira/8000/index.mpd"
+          },
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/bulagira/12000/index.mpd"
+          }
+        ]
+      },
+      {
+        "name": "Playlist 10 bitrate - costa_rica (each video is one bitrate)",
+        "playlist": [
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/costa_rica/200/index.mpd"
+          },
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/costa_rica/400/index.mpd"
+          },
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/costa_rica/600/index.mpd"
+          },
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/costa_rica/800/index.mpd"
+          },
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/costa_rica/1000/index.mpd"
+          },
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/costa_rica/1500/index.mpd"
+          },
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/costa_rica/2500/index.mpd"
+          },
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/costa_rica/4000/index.mpd"
+          },
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/costa_rica/8000/index.mpd"
+          },
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/costa_rica/12000/index.mpd"
+          }
+        ]
+      },
+      {
+        "name": "Playlist 10 bitrate - red wood (each video is one bitrate)",
+        "playlist": [
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/red_wood/200/index.mpd"
+          },
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/red_wood/400/index.mpd"
+          },
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/red_wood/600/index.mpd"
+          },
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/red_wood/800/index.mpd"
+          },
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/red_wood/1000/index.mpd"
+          },
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/red_wood/1500/index.mpd"
+          },
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/red_wood/2500/index.mpd"
+          },
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/red_wood/4000/index.mpd"
+          },
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/red_wood/8000/index.mpd"
+          },
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/red_wood/12000/index.mpd"
+          }
+        ]
+      },
+      {
+        "name": "Playlist 10 bitrate - uzabekistan (each video is one bitrate)",
+        "playlist": [
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/uzabekistan/200/index.mpd"
+          },
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/uzabekistan/400/index.mpd"
+          },
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/uzabekistan/600/index.mpd"
+          },
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/uzabekistan/800/index.mpd"
+          },
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/uzabekistan/1000/index.mpd"
+          },
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/uzabekistan/1500/index.mpd"
+          },
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/uzabekistan/2500/index.mpd"
+          },
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/uzabekistan/4000/index.mpd"
+          },
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/uzabekistan/8000/index.mpd"
+          },
+          {
+            "uri": "https://exo.dwngle.me/public/streaming/uzabekistan/12000/index.mpd"
           }
         ]
       },

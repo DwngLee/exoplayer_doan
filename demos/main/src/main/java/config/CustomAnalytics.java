@@ -66,7 +66,6 @@ public class CustomAnalytics implements AnalyticsListener, Runnable {
   @Override
   public void onLoadCompleted(EventTime eventTime, LoadEventInfo loadEventInfo,
       MediaLoadData mediaLoadData) {
-    logPowerConsumption();
 
     long mediaStartTimeMs = mediaLoadData.mediaStartTimeMs;
     long mediaEndTimeMs = mediaLoadData.mediaEndTimeMs;
@@ -134,7 +133,6 @@ public class CustomAnalytics implements AnalyticsListener, Runnable {
   public void onMediaItemTransition(EventTime eventTime, @Nullable MediaItem mediaItem,
       int reason) {
     if (mediaItem != null && !isLastVideoEnded) {
-      captureRemainingEnergy();
       String fileName = FileService.generateFileName();
       savePowerConsumptionData(fileName);
       saveVideoPlaybackData(fileName);
@@ -199,7 +197,7 @@ public class CustomAnalytics implements AnalyticsListener, Runnable {
 
   @Override
   public void run() {
-//    logPowerConsumption();
-//    handler.postDelayed(this, 1000);
+    logPowerConsumption();
+    handler.postDelayed(this, 1000);
   }
 }
